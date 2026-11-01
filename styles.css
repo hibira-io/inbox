@@ -1,0 +1,428 @@
+/* Default look for @hibira-io/inbox components. Every color and size is a
+   variable on .hb-in-root / .hb-in, so restyling is a few overrides. Dark
+   mode follows prefers-color-scheme, or set data-theme="dark" / "light" on
+   any ancestor. */
+
+.hb-in-root,
+.hb-in {
+  --hb-in-bg: #ffffff;
+  --hb-in-hover: #f6f5f3;
+  --hb-in-unread-bg: #f4f8ff;
+  --hb-in-border: #e6e4df;
+  --hb-in-ink: #111110;
+  --hb-in-muted: #6f6d66;
+  --hb-in-accent: #0d74ce;
+  --hb-in-badge: #e5484d;
+  --hb-in-badge-ink: #ffffff;
+  --hb-in-avatar-bg: #eceae6;
+  --hb-in-radius: 12px;
+  --hb-in-width: 380px;
+  --hb-in-height: 520px;
+  --hb-in-font: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --hb-in-shadow: 0 12px 32px rgb(0 0 0 / 0.12), 0 2px 6px rgb(0 0 0 / 0.06);
+  color: var(--hb-in-ink);
+  font: 14px/1.45 var(--hb-in-font);
+  box-sizing: border-box;
+}
+
+.hb-in-root *,
+.hb-in * {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .hb-in-root,
+  :root:not([data-theme='light']) .hb-in {
+    --hb-in-bg: #191918;
+    --hb-in-hover: #222221;
+    --hb-in-unread-bg: #15202e;
+    --hb-in-border: #31302e;
+    --hb-in-ink: #eeeeec;
+    --hb-in-muted: #a09f9a;
+    --hb-in-accent: #70b8ff;
+    --hb-in-avatar-bg: #2a2a28;
+    --hb-in-shadow: 0 12px 32px rgb(0 0 0 / 0.5);
+  }
+}
+
+[data-theme='dark'] .hb-in-root,
+[data-theme='dark'] .hb-in {
+  --hb-in-bg: #191918;
+  --hb-in-hover: #222221;
+  --hb-in-unread-bg: #15202e;
+  --hb-in-border: #31302e;
+  --hb-in-ink: #eeeeec;
+  --hb-in-muted: #a09f9a;
+  --hb-in-accent: #70b8ff;
+  --hb-in-avatar-bg: #2a2a28;
+  --hb-in-shadow: 0 12px 32px rgb(0 0 0 / 0.5);
+}
+
+.hb-in-icon {
+  display: block;
+  flex: none;
+}
+
+/* Bell */
+.hb-in-root {
+  position: relative;
+  display: inline-block;
+}
+
+.hb-in-bell {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hb-in-bell:hover,
+.hb-in-bell[aria-expanded='true'] {
+  background: var(--hb-in-hover);
+}
+
+.hb-in-bell:focus-visible,
+.hb-in-tab:focus-visible,
+.hb-in-action:focus-visible,
+.hb-in-button:focus-visible,
+.hb-in-item:focus-visible {
+  outline: 2px solid var(--hb-in-accent);
+  outline-offset: 2px;
+}
+
+.hb-in-badge {
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border: 2px solid var(--hb-in-bg);
+  border-radius: 9px;
+  background: var(--hb-in-badge);
+  color: var(--hb-in-badge-ink);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 14px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.hb-in-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  z-index: 1000;
+  width: min(var(--hb-in-width), calc(100vw - 16px));
+}
+
+.hb-in-popover--end {
+  right: 0;
+}
+
+.hb-in-popover--start {
+  left: 0;
+}
+
+.hb-in-popover .hb-in {
+  height: min(var(--hb-in-height), calc(100vh - 96px));
+  box-shadow: var(--hb-in-shadow);
+}
+
+@media (max-width: 480px) {
+  .hb-in-popover {
+    position: fixed;
+    top: 56px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+  }
+}
+
+/* Panel */
+.hb-in {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--hb-in-border);
+  border-radius: var(--hb-in-radius);
+  background: var(--hb-in-bg);
+}
+
+.hb-in-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 12px 4px 16px;
+  min-height: 48px;
+}
+
+.hb-in-heading {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.hb-in-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--hb-in-border);
+}
+
+.hb-in-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 6px 10px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: transparent;
+  color: var(--hb-in-muted);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.hb-in-tab:hover {
+  color: var(--hb-in-ink);
+}
+
+.hb-in-tab--on {
+  border-bottom-color: var(--hb-in-ink);
+  color: var(--hb-in-ink);
+}
+
+.hb-in-count {
+  min-width: 18px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background: var(--hb-in-avatar-bg);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.hb-in-list {
+  flex: 1;
+  margin: 0;
+  padding: 4px 0;
+  overflow-y: auto;
+  list-style: none;
+  overscroll-behavior: contain;
+}
+
+.hb-in-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 16px 12px 20px;
+  cursor: pointer;
+}
+
+.hb-in-item:hover {
+  background: var(--hb-in-hover);
+}
+
+.hb-in-item--unread {
+  background: var(--hb-in-unread-bg);
+}
+
+.hb-in-dot {
+  position: absolute;
+  top: 26px;
+  left: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--hb-in-accent);
+}
+
+.hb-in-avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--hb-in-avatar-bg);
+  color: var(--hb-in-muted);
+  font-weight: 600;
+  object-fit: cover;
+}
+
+.hb-in-text {
+  min-width: 0;
+}
+
+.hb-in-title {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.hb-in-item--unread .hb-in-title {
+  font-weight: 600;
+}
+
+.hb-in-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--hb-in-muted);
+  overflow-wrap: anywhere;
+}
+
+.hb-in-time {
+  display: block;
+  margin-top: 2px;
+  color: var(--hb-in-muted);
+  font-size: 12px;
+}
+
+.hb-in-actions {
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.hb-in-item:hover .hb-in-actions,
+.hb-in-item:focus-within .hb-in-actions {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .hb-in-actions {
+    opacity: 1;
+  }
+}
+
+.hb-in-action {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--hb-in-muted);
+  cursor: pointer;
+}
+
+.hb-in-action:hover {
+  background: var(--hb-in-avatar-bg);
+  color: var(--hb-in-ink);
+}
+
+/* Tooltip for icon-only actions. */
+.hb-in-action::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 2;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--hb-in-ink);
+  color: var(--hb-in-bg);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s 0.3s;
+}
+
+.hb-in-action:hover::after,
+.hb-in-action:focus-visible::after {
+  opacity: 1;
+}
+
+.hb-in-state {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 24px;
+  color: var(--hb-in-muted);
+  text-align: center;
+}
+
+.hb-in-state p {
+  margin: 0;
+}
+
+.hb-in-more {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+}
+
+.hb-in-button {
+  padding: 6px 12px;
+  border: 1px solid var(--hb-in-border);
+  border-radius: 8px;
+  background: var(--hb-in-bg);
+  color: var(--hb-in-ink);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.hb-in-button:hover {
+  background: var(--hb-in-hover);
+}
+
+.hb-in-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.hb-in-item--skeleton {
+  cursor: default;
+}
+
+.hb-in-item--skeleton:hover {
+  background: none;
+}
+
+.hb-in-line {
+  display: block;
+  height: 10px;
+  margin: 6px 0 10px;
+  border-radius: 5px;
+  background: var(--hb-in-avatar-bg);
+}
+
+.hb-in-line--short {
+  width: 55%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hb-in-item--skeleton .hb-in-avatar,
+  .hb-in-line {
+    animation: hb-in-pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes hb-in-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
